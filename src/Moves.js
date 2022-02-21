@@ -10,7 +10,7 @@ const Moves = ({ moves }) => {
       data-bs-ride="carousel"
       data-bs-interval="false"
     >
-      <div className="carousel-indicators">
+      <div className="carousel-indicators" style={{marginBottom: "-20px"}}>
         {(() => {
           let palabras = 14;
           let paginas = Math.ceil(moves.length / palabras);
@@ -62,7 +62,7 @@ const Moves = ({ moves }) => {
             const key = uuidv4();
             if (index === 0) {
               return (
-                <div className="carousel-item active" key={key}>
+                <div className="carousel-item active py-2 px-4" key={key}>
                   <div className="row">
                     {arreglo.map((slice) => {
                       const key = uuidv4();
@@ -82,7 +82,7 @@ const Moves = ({ moves }) => {
               );
             }
             return (
-              <div className="carousel-item" key={key}>
+              <div className="carousel-item py-2 px-4" key={key}>
                 <div className="row">
                   {arreglo.map((slice) => {
                     const key = uuidv4();
@@ -109,6 +109,7 @@ const Moves = ({ moves }) => {
         type="button"
         data-bs-target={`#carouselExampleIndicators${id}`}
         data-bs-slide="prev"
+        style={{marginLeft: "-15px"}}
       >
         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Previous</span>
@@ -118,6 +119,7 @@ const Moves = ({ moves }) => {
         type="button"
         data-bs-target={`#carouselExampleIndicators${id}`}
         data-bs-slide="next"
+        style={{marginRight: "-15px"}}
       >
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Next</span>

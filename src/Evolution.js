@@ -39,14 +39,14 @@ const Evolution = ({ evolution }) => {
           const key = uuidv4();
           return i === 0 ? (
             <img
-              className="img-fluid carousel-item active"
+              className="img-fluid carousel-item active p-5"
               src={e.sprite}
               alt="pokemonImg"
               key={key}
             />
           ) : (
             <img
-              className="img-fluid carousel-item"
+              className="img-fluid carousel-item p-5"
               src={e.sprite}
               alt="pokemonImg"
               key={key}

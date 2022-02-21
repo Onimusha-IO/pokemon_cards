@@ -3,7 +3,7 @@ import Card from "./Card";
 
 import { v4 as uuidv4 } from "uuid";
 
-// funcion recurisva para extraer los nombres de la cadena de evolucion 
+// funcion recurisva para extraer los nombres de la cadena de evolucion
 const recur = (evolves_to, arr) => {
   return evolves_to.map((e) => {
     if (!e.evolves_to) {
@@ -115,11 +115,17 @@ const CardList = () => {
   }, []);
 
   return (
-    <div>
-      {data.map((e) => {
-        const key = uuidv4();
-        return <Card data={e} key={key} />;
-      })}
+    <div className="container">
+      <div className="row">
+        {data.map((e) => {
+          const key = uuidv4();
+          return (
+            <div className="col-4" key={key}>
+              <Card data={e} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
