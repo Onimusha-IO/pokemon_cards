@@ -4,8 +4,10 @@ import Moves from "./Moves";
 import Stats from "./Stats";
 
 import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
 
-const Card = ({ data }) => {
+const Card = ({ url }) => {
+  const id = uuidv4();
   const about = uuidv4();
   const stats = uuidv4();
   const moves = uuidv4();
@@ -13,13 +15,92 @@ const Card = ({ data }) => {
 
   const nav = uuidv4();
 
+  const [data, setData] = useState(null);
+
+  // funcion recurisva para extraer los nombres y las imagenes de la cadena de evolucion
+  const getchainData = async (chain) => {
+    let data = [];
+
+    const speciesData = await fetch(chain.species.url).then((res) =>
+      res.json()
+    );
+
+    const pokemon = speciesData.varieties.find((e) => {
+      return e.is_default;
+    });
+
+    const pokemonData = await fetch(pokemon.pokemon.url).then((res) =>
+      res.json()
+    );
+    if (!chain.evolves_to.length) {
+      data.push({
+        name: pokemonData.name,
+        sprite: pokemonData.sprites.other["official-artwork"].front_default,
+      });
+    } else {
+      data.push({
+        name: pokemonData.name,
+        sprite: pokemonData.sprites.other["official-artwork"].front_default,
+      });
+
+      // de haber evoluciones paralelas las agrega asi como las que existan de forma anidada
+      for await (const it of chain.evolves_to) {
+        data = [...data, ...(await getchainData(it))];
+      }
+    }
+
+    return data;
+  };
+
+  const getData = async (url) => {
+    const data = await fetch(url).then((res) => res.json()); // consulta la url del pokemon
+
+    const about = await fetch(data.species.url).then((res) => res.json()); // extrae informacion detallada de la especie del pokemon
+
+    // elige el texto informativo del pokemon en ingles y lo formatea
+    let text = about.flavor_text_entries
+      .find((it) => {
+        return it.language.name === "en";
+      })
+      .flavor_text.replace("\f", " ");
+
+    // obtiene el objeto con la informacion de la cadena evolutiva del pokemon actual
+    let evolutionData = await fetch(about.evolution_chain.url).then((res) =>
+      res.json()
+    );
+
+    // asocia los nombres y las imagenes de la cadena evolutiva del pokemon actual
+    let chainData = await getchainData(evolutionData.chain);
+
+    setData({
+      id: data.id,
+      name: data.name,
+      type: data.types,
+      img: data.sprites.other["official-artwork"].front_default,
+      about: {
+        text: text,
+        height: data.height,
+        weight: data.weight,
+        abilities: data.abilities,
+      },
+      stats: data.stats,
+      moves: data.moves,
+      evolutionChain: chainData,
+    });
+  };
+
+  useEffect(() => {
+    getData(url);
+  }, []);
+
   return (
     <>
       {data ? (
         <div
           className=" Tarjeta border rounded shadow m-4"
+          id={`Tarjeta-${id}`}
           style={{
-            width: "350px",
+            width: "370px",
             height: "770px",
             borderRadius: "15px",
           }}
@@ -138,19 +219,12 @@ const Card = ({ data }) => {
           </div>
         </div>
       ) : (
-        <div class="card" aria-hidden="true">
-          <img src="..." class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title placeholder-glow">
-              <span class="placeholder col-6"></span>
-            </h5>
-            <p class="card-text placeholder-glow">
-              <span class="placeholder col-7"></span>
-              <span class="placeholder col-4"></span>
-              <span class="placeholder col-4"></span>
-              <span class="placeholder col-6"></span>
-              <span class="placeholder col-8"></span>
-            </p>
+        <div
+          className="rounded shadow d-flex justify-content-center m-3"
+          style={{ width: "345px", height: "345px" }}
+        >
+          <div className="spinner-border text-primary my-auto" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
         </div>
       )}

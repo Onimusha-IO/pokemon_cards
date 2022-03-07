@@ -12,7 +12,7 @@ const Moves = ({ moves }) => {
     >
       <div className="carousel-indicators" style={{marginBottom: "-20px"}}>
         {(() => {
-          let palabras = 14;
+          let palabras = 10;
           let paginas = Math.ceil(moves.length / palabras);
           let arr = [];
           for (let i = 1; i <= paginas; i++) {
@@ -45,7 +45,7 @@ const Moves = ({ moves }) => {
 
       <div className="carousel-inner">
         {(() => {
-          let palabras = 14;
+          let palabras = 10;
           let paginas = Math.ceil(moves.length / palabras);
           let arr = [];
           const paginate = (array, page_size, page_number) => {
@@ -62,15 +62,15 @@ const Moves = ({ moves }) => {
             const key = uuidv4();
             if (index === 0) {
               return (
-                <div className="carousel-item active py-2 px-4" key={key}>
+                <div className="carousel-item active py-2 px-3" key={key}  style={{height: "250px"}}>
                   <div className="row">
                     {arreglo.map((slice) => {
                       const key = uuidv4();
                       return (
                         <div className="col-6" key={key}>
                           <p
-                            className="text-capitalize text-white bg-secondary rounded-pill text-center"
-                            style={{ fontSize: "14px" }}
+                            className="text-capitalize text-white bg-secondary rounded-pill text-center p-1"
+                            style={{ fontSize: "13px" }}
                           >
                             {slice.move.name}
                           </p>
@@ -82,15 +82,15 @@ const Moves = ({ moves }) => {
               );
             }
             return (
-              <div className="carousel-item py-2 px-4" key={key}>
+              <div className="carousel-item py-2 px-3" key={key} style={{height: "250px"}}>
                 <div className="row">
                   {arreglo.map((slice) => {
                     const key = uuidv4();
                     return (
                       <div className="col-6" key={key}>
                         <p
-                          className="text-capitalize text-white bg-secondary rounded-pill text-center"
-                          style={{ fontSize: "14px" }}
+                          className="text-capitalize text-white bg-secondary rounded-pill text-center p-1"
+                          style={{ fontSize: "13px" }}
                         >
                           {slice.move.name}
                         </p>
@@ -109,7 +109,7 @@ const Moves = ({ moves }) => {
         type="button"
         data-bs-target={`#carouselExampleIndicators${id}`}
         data-bs-slide="prev"
-        style={{marginLeft: "-15px"}}
+        style={{marginLeft: "-20px"}}
       >
         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Previous</span>
@@ -119,7 +119,7 @@ const Moves = ({ moves }) => {
         type="button"
         data-bs-target={`#carouselExampleIndicators${id}`}
         data-bs-slide="next"
-        style={{marginRight: "-15px"}}
+        style={{marginRight: "-20px"}}
       >
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Next</span>
