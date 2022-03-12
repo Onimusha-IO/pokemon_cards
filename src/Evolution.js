@@ -43,6 +43,7 @@ const Evolution = ({ evolution }) => {
               src={e.sprite}
               alt="pokemonImg"
               key={key}
+              style={{ width: "300px", height: "300px" }}
             />
           ) : (
             <img
@@ -50,6 +51,7 @@ const Evolution = ({ evolution }) => {
               src={e.sprite}
               alt="pokemonImg"
               key={key}
+              style={{ width: "300px", height: "300px" }}
             />
           );
         })}

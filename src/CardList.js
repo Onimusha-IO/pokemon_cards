@@ -45,11 +45,15 @@ const CardList = () => {
         {data &&
           data.results.map((e) => {
             const key = uuidv4();
-            return <Card url={e.url} key={key} className="col-4" />;
+            return (
+              <div className="col-3">
+                <Card url={e.url} key={key} />
+              </div>
+            );
           })}
       </div>
       <div
-        className="container shadow d-flex justify-content-around mb-4"
+        className="container shadow d-flex justify-content-around my-5"
         style={{ width: "400px" }}
       >
         <button
