@@ -152,7 +152,8 @@ const Card = ({ url }) => {
                       className="img-fluid"
                       src={`./img/${e.type.name}.png`}
                       key={key}
-                      alt={"type"}
+                      alt={"pokemon type"}
+                      title={`${e.type.name}`}
                     />
                   );
                 })}
